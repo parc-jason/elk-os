@@ -3,11 +3,6 @@ cluster:
 
 network:
   host: ${NETWORK_HOST}
-  publish_host: ${PUBLISH_HOST}
 
 discovery:
-  zen:
-    minimum_master_nodes: ${NUMBER_OF_MASTERS}
-    ping:
-      unicast:
-        hosts: ${UNICAST_HOSTS}
+  type: single-node
