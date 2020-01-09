@@ -1,6 +1,8 @@
 FROM docker.elastic.co/logstash/logstash:7.5.1
 
-USER root
+RUN rm -f /usr/share/logstash/pipeline/logstash.conf
+ADD pipeline/ /usr/share/logstash/pipeline/
+ADD config/ /usr/share/logstash/config/
 
-
-USER 1001
+ENV XPACK_MONITORING_ELASTICSEARCH_HOSTS=elasticsearch
+ENV ELASTICSEARCH_SERVICE_HOST=elasticsearch
