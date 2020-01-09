@@ -7,5 +7,6 @@ ENV ELASTICSEARCH_SERVICE_HOST=elasticsearch
 
 RUN rm -f /usr/share/logstash/pipeline/logstash.conf
 ADD pipeline/ /usr/share/logstash/pipeline/
+RUN chmod -R g+r /usr/share/logstash/pipeline/
 
 USER 1001
