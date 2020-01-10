@@ -11,6 +11,8 @@ ENV GPG_KEY "46095ACC8548582C1A2699A9D27D666CD88E42B4"
 
 ENV PATH /usr/share/kibana/bin:$PATH
 
+USER root
+
 RUN apk add --no-cache bash su-exec
 RUN apk add --no-cache -t .build-deps wget ca-certificates gnupg openssl \
   && set -ex \
@@ -28,8 +30,8 @@ RUN apk add --no-cache -t .build-deps wget ca-certificates gnupg openssl \
   || gpg --keyserver keyserver.pgp.com --recv-keys "$GPG_KEY" ); \
   gpg --batch --verify kibana.tar.gz.asc kibana.tar.gz; \
   rm -rf "$GNUPGHOME" kibana.tar.gz.asc || true; \
-  fi;
-RUN tar -xf kibana.tar.gz \
+  fi; \
+  tar -xf kibana.tar.gz \
   && ls -lah \
   && mv kibana-$VERSION-linux-x86_64 /usr/share/kibana \
   && adduser -DH -s /sbin/nologin kibana \
@@ -51,6 +53,8 @@ RUN chmod -R og+w /usr/share/kibana/data
 WORKDIR /usr/share/kibana
 
 EXPOSE 5601
+
+USER 1001
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["kibana"]
