@@ -17,8 +17,8 @@ RUN apk add --no-cache bash su-exec
 RUN apk add --no-cache -t .build-deps wget ca-certificates gnupg openssl \
   && set -ex \
   && cd /tmp \
-  && echo "===> Install Kibana..." \
-  && wget --progress=bar:force -O kibana.tar.gz "$TARBAL"; 
+  && echo "===> Install Kibana..." 
+RUN wget --progress=bar:force -O kibana.tar.gz "$TARBAL"; 
   if [ "$TARBALL_SHA" ]; then \
   echo "$TARBALL_SHA *kibana.tar.gz" | sha512sum -c -; \
   fi; \
