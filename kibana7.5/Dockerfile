@@ -18,7 +18,7 @@ RUN apk add --no-cache -t .build-deps wget ca-certificates gnupg openssl \
   && set -ex \
   && cd /tmp \
   && echo "===> Install Kibana..." \
-  && wget --progress=bar:force -O kibana.tar.gz "$TARBAL"; \
+  && wget --progress=bar:force -O kibana.tar.gz "$TARBAL"; 
   if [ "$TARBALL_SHA" ]; then \
   echo "$TARBALL_SHA *kibana.tar.gz" | sha512sum -c -; \
   fi; \
@@ -30,8 +30,8 @@ RUN apk add --no-cache -t .build-deps wget ca-certificates gnupg openssl \
   || gpg --keyserver keyserver.pgp.com --recv-keys "$GPG_KEY" ); \
   gpg --batch --verify kibana.tar.gz.asc kibana.tar.gz; \
   rm -rf "$GNUPGHOME" kibana.tar.gz.asc || true; \
-  fi; \
-  tar -xf kibana.tar.gz \
+  fi; 
+RUN tar -xf kibana.tar.gz \
   && ls -lah \
   && mv kibana-$VERSION-linux-x86_64 /usr/share/kibana \
   && adduser -DH -s /sbin/nologin kibana \
