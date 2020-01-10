@@ -26,10 +26,10 @@ RUN apk add --no-cache -t .build-deps wget ca-certificates gnupg openssl \
   ( gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$GPG_KEY" \
   || gpg --keyserver pgp.mit.edu --recv-keys "$GPG_KEY" \
   || gpg --keyserver keyserver.pgp.com --recv-keys "$GPG_KEY" ); \
-  gpg --batch --verify kibana.tar.gz.asc kibana.tar.gz;
-RUN rm -rf "$GNUPGHOME" kibana.tar.gz.asc || true; \
-  fi; \
-  tar -xf kibana.tar.gz \
+  gpg --batch --verify kibana.tar.gz.asc kibana.tar.gz; \
+  rm -rf "$GNUPGHOME" kibana.tar.gz.asc || true; \
+  fi;
+RUN tar -xf kibana.tar.gz \
   && ls -lah \
   && mv kibana-$VERSION-linux-x86_64 /usr/share/kibana \
   && adduser -DH -s /sbin/nologin kibana \
