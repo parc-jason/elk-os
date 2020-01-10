@@ -15,10 +15,10 @@ USER root
 
 RUN apk add --no-cache bash su-exec
 RUN apk add --no-cache -t .build-deps wget ca-certificates gnupg openssl \
-  && set -ex \
-  && cd /tmp \
-  && echo "===> Install Kibana..." \
-  && wget --progress=bar:force -O kibana.tar.gz "$TARBAL"; \
+  && set -ex
+RUN cd /tmp \
+  && echo "===> Install Kibana..." 
+RUN wget --progress=bar:force -O kibana.tar.gz "$TARBAL"; \
   if [ "$TARBALL_SHA" ]; then \
   echo "$TARBALL_SHA *kibana.tar.gz" | sha512sum -c -; \
   fi; \
@@ -30,20 +30,20 @@ RUN apk add --no-cache -t .build-deps wget ca-certificates gnupg openssl \
   || gpg --keyserver keyserver.pgp.com --recv-keys "$GPG_KEY" ); \
   gpg --batch --verify kibana.tar.gz.asc kibana.tar.gz; \
   rm -rf "$GNUPGHOME" kibana.tar.gz.asc || true; \
-  fi; \
-  tar -xf kibana.tar.gz \
+  fi;
+RUN tar -xf kibana.tar.gz \
   && ls -lah \
-  && mv kibana-$VERSION-linux-x86_64 /usr/share/kibana \
-  && adduser -DH -s /sbin/nologin kibana \
+  && mv kibana-$VERSION-linux-x86_64 /usr/share/kibana
+RUN adduser -DH -s /sbin/nologin kibana \
   # usr alpine nodejs and not bundled version
   && bundled='NODE="${DIR}/node/bin/node"' \
   && alpine_node='NODE="/usr/local/bin/node"' \
   && sed -i "s|$bundled|$alpine_node|g" /usr/share/kibana/bin/kibana-plugin \
-  && sed -i "s|$bundled|$alpine_node|g" /usr/share/kibana/bin/kibana \
-  && rm -rf /usr/share/kibana/node \
-  && chown -R kibana:kibana /usr/share/kibana \
-  && rm -rf /tmp/* \
-  && apk del --purge .build-deps
+  && sed -i "s|$bundled|$alpine_node|g" /usr/share/kibana/bin/kibana
+RUN rm -rf /usr/share/kibana/node
+RUN chown -R kibana:kibana /usr/share/kibana \
+  && rm -rf /tmp/*
+RUN apk del --purge .build-deps
 
 COPY config/kibana/kibana.yml /usr/share/kibana/config/kibana.yml
 COPY docker-entrypoint.sh /
