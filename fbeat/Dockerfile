@@ -5,4 +5,4 @@ USER root
 RUN chown root:filebeat /usr/share/filebeat/filebeat.yml
 USER filebeat
 
-ENTRYPOINT ["bash","-c","export PATH=$PATH:/usr/share/filebeat && /usr/local/bin/docker-entrypoint -e"]
+ENTRYPOINT ["bash","-c","'export PATH=$PATH:/usr/share/filebeat && /usr/local/bin/docker-entrypoint -e'"]
