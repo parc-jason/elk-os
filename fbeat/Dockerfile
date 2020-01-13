@@ -9,5 +9,5 @@ RUN export PATH=$PATH:/usr/share/filebeat && \
     chgrp -R 0 /usr/share/filebeat/filebeat && \
     chmod +x /docker-entrypoint.sh
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh", "-e"]
 
