@@ -2,11 +2,10 @@ FROM docker.elastic.co/beats/filebeat:7.5.1
 
 USER root
 
+COPY docker-entrypoint.sh /docker-entrypoint.sh
 COPY filebeat.yml /usr/share/filebeat/filebeat.yml
-RUN export PATH=$PATH:/usr/share/filebeat
+RUN export PATH=$PATH:/usr/share/filebeat &&
+    chgrp -R 0 /usr/share/filebeat/filebeat
 
-RUN chown root:filebeat /usr/share/filebeat/filebeat.yml
-
-USER filebeat
-CMD["filebeat", "-e"]
+ENTRYPOINT["/docker-entrypoint.sh", "-e"]
 
