@@ -8,5 +8,5 @@ RUN export PATH=$PATH:/usr/share/filebeat
 RUN chown root:filebeat /usr/share/filebeat/filebeat.yml
 
 USER filebeat
-CMD["exec", "filebeat", "-e"]
+CMD["filebeat", "-e"]
 
