@@ -4,7 +4,7 @@ USER root
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 COPY filebeat.yml /usr/share/filebeat/filebeat.yml
-RUN export PATH=$PATH:/usr/share/filebeat &&
+RUN export PATH=$PATH:/usr/share/filebeat && \
     chgrp -R 0 /usr/share/filebeat/filebeat
 
 ENTRYPOINT["/docker-entrypoint.sh", "-e"]
