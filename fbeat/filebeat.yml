@@ -4,12 +4,10 @@ filebeat.config:
     reload.enabled: false
 
 filebeat.inputs:
-- type: stdin
 - type: log
   paths:
     - /var/log/messages
-    - /var/log/*.log
-    
+
 filebeat.autodiscover:
   providers:
     - type: docker
