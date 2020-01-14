@@ -9,4 +9,4 @@ filebeat.inputs:
     - /var/log/messages
 
 output.logstash:
-  hosts: ["kibana:5044"]
+  hosts: ["logstash:5044"]

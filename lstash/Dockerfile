@@ -5,4 +5,4 @@ RUN rm -f /usr/share/logstash/pipeline/logstash.conf && \
 
 ADD pipeline/ /usr/share/logstash/pipeline/
 
-EXPOSE 1025
+EXPOSE 1025 5044
